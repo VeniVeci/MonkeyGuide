@@ -1,21 +1,49 @@
 # 使用步骤
 
+## 直接使用
+
+### Elasticsearch的安装和使用
+
+1. 下载Elasticsearch6.2.2的zip包，并解压到指定目录，下载地址：[https://www.elastic.co/cn/downloads/past-releases/elasticsearch-6-2-2](https://www.elastic.co/cn/downloads/past-releases/elasticsearch-6-2-2)
+2. 运行bin目录下的elasticsearch.bat启动Elasticsearch
+3. 安装图形化插件head，用来可视化存储在es中的数据；[ElasticSearch入门篇（保姆级教程） - coderxz - 博客园 (cnblogs.com)](https://www.cnblogs.com/coderxz/p/13268417.html#24-%E5%AE%89%E8%A3%85%E5%9B%BE%E5%BD%A2%E5%8C%96%E6%8F%92%E4%BB%B6)
+4. 按照博客教程启动 head，通过浏览器访问es；
+5. ![image.png](./assets/1699779731646-image.png)
+
+![image.png](./assets/1699779768503-image.png)
+
+![image.png](./assets/1699779851768-image.png)
+
+## java项目中使用
+
 引入依赖
 
-配置哪些字段使用 弹性搜索
+```java
+        <!--Elasticsearch相关依赖-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
+        </dependency>
+```
 
-data:
-elasticsearch:
-repositories:
-enabled: true
-cluster-nodes: 127.0.0.1:9300 # es的连接地址及端口号
-cluster-name: elasticsearch # es集群的名称
+yml配置
 
-# 博客
+```java
+spring:
+  data:
+    elasticsearch:
+      repositories:
+        enabled: true
+      cluster-nodes: 127.0.0.1:9300 # es的连接地址及端口号
+      cluster-name: elasticsearch # es集群的名称
+
+```
+
+编写接口类使用
+
+# 相关博客
 
 [ElasticSearch入门篇（保姆级教程） - coderxz - 博客园 (cnblogs.com)](https://www.cnblogs.com/coderxz/p/13268417.html#8%E6%9F%A5%E8%AF%A2%E6%96%87%E6%A1%A3document-----get)
-
-官方文档  参考价值不大
 
 [Elasticsearch 入门 - 《elasticsearch 中文文档帮助手册教程 V7.11》 - 极客文档 (geekdaxue.co)](https://geekdaxue.co/read/elasticsearch-doc-zh-v7.11/docs-getting_started-getting_started.md)
 
@@ -41,7 +69,7 @@ Elasticsearch索引的精髓：
 
 ### Elasticsearch是如何做到快速索引的
 
-InfoQ那篇文章里说Elasticsearch使用的倒排索引比关系型数据库的B-Tree索引快，为什么呢？
+InfoQ那篇文章里说Elasticsearch使用的倒排索引比关系型数据库的B-Tree索引快
 
 # 应用场景
 
@@ -66,47 +94,35 @@ Elasticsearch 为各种数据类型提供接近实时的搜索和分析。不论
 
 **9300是tcp通信端口，es集群之间使用tcp进行通信，9200是http协议端口。**
 
-所以 head插件 是会去访问 9200端口的
-
-## 为什么java项目中配置的是 9300呢？？
-
-## es的特性是什么  和普通搜索的区别是
-
-比mysql的 like 更强大 而且性能更好
-
-使用时需要注意的点
-
 # 概念
 
 ![image.png](./assets/image.png)
 
-index 索引 可以等价为 数据库
-
-#### 1）index索引-
+## 1）index索引
 
 > 一个索引就是一个拥有几分相似特征的文档的集合。比如说，你可以有一个客户数据的索引，另一个产品目录的索引，还有一个订单数据的索引。一个索引由一个名字来标识（必须全部是小写字母的），并且当我们要对对应于这个索引中的文档进行索引、搜索、更新和删除的时候，都要使用到这个名字。在一个集群中，可以定义任意多的索引。**可类比mysql中的数据库**  目前的索引是 pms  商场算是数据库
 
-#### 2）type类型
+## 2）type类型
 
 > 在一个索引中，你可以定义一种或多种类型。一个类型是你的索引的一个逻辑上的分类/分区，其语义完全由你来定。通常，会为具有一组共同字段的文档定义一个类型。比如说，我们假设你运营一个博客平台并且将你所有的数据存储到一个索引中。在这个索引中，你可以为用户数据定义一个类型，为博客数据定义另一个类型，当然，也可以为评论数据定义另一个类型。 **可类比mysql中的表**   索引中有几种不同类型的 数据 ，比如品牌，文章，会员
 
-#### 3)  Filed字段
+## 3)  Filed字段
 
 > 相当于是数据表的字段，对文档数据根据不同属性进行的分类标识 。
 
-#### 4）映射mapping
+## 4）映射mapping
 
 > mapping是处理数据的方式和规则方面做一些限制，如某个字段的数据类型、默认值、分析器、是否被索引等等，这些都是映射里面可以设置的，其它就是处理es里面数据的一些使用规则设置也叫做映射，按着最优规则处理数据对性能提高很大，因此才需要建立映射，并且需要思考如何建立映射才能对性能更好。**相当于mysql中的创建表的过程，设置主键外键等等**
 
-#### 5）document文档
+## 5）document文档
 
 > 一个文档是一个可被索引的基础信息单元。比如，你可以拥有某一个客户的文档，某一个产品的一个文档，当然，也可以拥有某个订单的一个文档。文档以JSON（Javascript Object Notation）格式来表示，而JSON是一个到处存在的互联网数据交互格式。在一个index/type里面，你可以存储任意多的文档。注意，尽管一个文档，物理上存在于一个索引之中，文档必须被索引/赋予一个索引的type。 **插入索引库以文档为单位，类比与数据库中的一行数据**
 
-#### 6）集群cluster
+## 6）集群cluster
 
 > 一个集群就是由一个或多个节点组织在一起，它们共同持有整个的数据，并一起提供索引和搜索功能。一个集群由 一个唯一的名字标识，这个名字默认就是“elasticsearch”。这个名字是重要的，因为一个节点只能通过指定某个集 群的名字，来加入这个集群。
 
-#### 7）节点node
+## 7）节点node
 
 > 一个节点是集群中的一个服务器，作为集群的一部分，它存储数据，参与集群的索引和搜索功能。和集群类似，一 个节点也是由一个名字来标识的，默认情况下，这个名字是一个随机的漫威漫画角色的名字，这个名字会在启动的 时候赋予节点。这个名字对于管理工作来说挺重要的，因为在这个管理过程中，你会去确定网络中的哪些服务器对 应于Elasticsearch集群中的哪些节点。
 
@@ -114,7 +130,7 @@ index 索引 可以等价为 数据库
 
 > 在一个集群里，只要你想，可以拥有任意多个节点。而且，如果当前你的网络中没有运行任何Elasticsearch节点， 这时启动一个节点，会默认创建并加入一个叫做“elasticsearch”的集群。
 
-#### 8）分片和复制 shards&replicas
+## 8）分片和复制 shards&replicas
 
 > 一个索引可以存储超出单个结点硬件限制的大量数据。比如，一个具有10亿文档的索引占据1TB的磁盘空间，而任一节点都没有这样大的磁盘空间；或者单个节点处理搜索请求，响应太慢。为了解决这个问题，Elasticsearch提供了将索引划分成多份的能力，这些份就叫做分片。当你创建一个索引的时候，你可以指定你想要的分片的数量。每个分片本身也是一个功能完善并且独立的“索引”，这个“索引”可以被放置到集群中的任何节点上。分片很重要，主要有两方面的原因： 1）允许你水平分割/扩展你的内容容量。 2）允许你在分片（潜在地，位于多个节点上）之上进行分布式的、并行的操作，进而提高性能/吞吐量。
 
@@ -126,28 +142,36 @@ index 索引 可以等价为 数据库
 
 > 默认情况下，Elasticsearch中的每个索引被分片5个主分片和1个复制，这意味着，如果你的集群中至少有两个节点，你的索引将会有5个主分片和另外5个复制分片（1个完全拷贝），这样的话每个索引总共就有10个分片。
 
-在索引库里新建一个 mall 索引，用来检索mall中的全部数据。
+## 实例：
 
-mall索引中 添加品牌类型， 会员类型，商品类型这三种 type的数据 来区分不同的数据
+mall：商城项目
 
-对于品牌类型，有一些field，比如品牌的名称，描述等等
+在索引库里新建一个 mall 索引，用来检索 mall项目中的全部数据。
 
-品牌的id
+mall索引中添加品牌类型，用户类型，商品类型，订单类型这几种 type 的数据来区分不同的数据，也就是品牌信息表，用户信息表，商品信息表，订单信息表
 
-其中需要做一些映射，mapping
+对于每一种类型，有一些field，比如品牌的id，名称，描述等等，这样类型的结构就定义好了
 
-这样索引的结构就定义好了
-
-接下来就是插入数据 也就是document 文档 就是一条数据
+接下来就是插入文档document，也就是插入数据。
 
 # 遇到的问题
 
-elasticsearch中head连不上es，集群健康值: 未连接
+## elasticsearch中head连不上es，集群健康值: 未连接
 
-原因是需要配置
+解决：
+
+需要在elasticsearch的配置文件中添加以下配置：
+
+启用跨源资源共享 (CORS)
 
 ```java
 http.cors.enabled: true
 http.cors.allow-origin: "*"
 network.host: 127.0.0.1
 ```
+
+
+
+network.host: 127.0.0.1
+
+指定服务监听的网络接口。在这里，服务将仅监听本地回环地址（127.0.0.1），这意味着它只能从本地访问，而不对外部网络可见。如果要允许外部访问，你可能需要将其设置为服务器的公共 IP 地址或使用 0.0.0.0 表示监听所有可用的网络接口。
