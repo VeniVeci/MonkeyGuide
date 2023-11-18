@@ -6,10 +6,8 @@ MOM系统中包含IOT、WMS、[MES](https://link.zhihu.com/?target=https%3A//www
 
 **IOT、WMS、[MES](https://link.zhihu.com/?target=https%3A//www.evget.com/solution/mes)、EAM、QMS**
 
-
 中文译为“制造运营管理”，这个概念并非来自于西门子，而是美国仪器、系统和自动化协会(Instrumentation, System, and Automation Society, ISA)于2000年开始发布的ISA-95标准中首次确立的概念
 
 ![image.png](./assets/image.png)
-
 
 **Simatic IT**已经发展成Simatic IT UA了，没错，UA就是统一架构（Unified Architecture）的意思。主要包括基础套件、流程行业套件、离散行业套件、制造智能套件等。
