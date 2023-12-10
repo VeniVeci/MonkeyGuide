@@ -3,7 +3,6 @@ k8s的全生命周期管理
 
 虽然 [Docker](https://link.zhihu.com/?target=http%3A//mp.weixin.qq.com/s%3F__biz%3DMzI0MDQ4MTM5NQ%3D%3D%26mid%3D2247509907%26idx%3D1%26sn%3Dc78499a0684f7d7ef82bfdcedd4b4150%26chksm%3De918c28fde6f4b993d5a3ea0600b3a06b6cca768037425dae7142833c8f4cadfbae5dd9d0fc3%26scene%3D21%23wechat_redirect) 已经很强大了，但是在实际使用上还是有诸多不便，比如集群管理、资源调度、文件管理等等。那么在这样一个百花齐放的容器时代涌现出了很多解决方案，比如 Mesos、Swarm、Kubernetes 等等，其中谷歌开源的 [Kubernetes](https://link.zhihu.com/?target=http%3A//mp.weixin.qq.com/s%3F__biz%3DMzI0MDQ4MTM5NQ%3D%3D%26mid%3D2247507390%26idx%3D2%26sn%3D5887ec3021ce80e44a4c62e2253560a8%26chksm%3De918b8a2de6f31b45a71be736919c2a99f4ed2f77b48c10c7482bada97198f9a35682962e683%26scene%3D21%23wechat_redirect) 是作为老大哥的存在。
 
-
 1、创建集群：为什么要使用集群？
 
 有一句古话叫做三个臭皮匠，赛过诸葛亮，这就是创建集群的原因。。。
@@ -39,27 +38,18 @@ K8S是2014年6月由Google公司正式公布出来并宣布开源的。
 
 目前，kubernetes的版本已经发展到V1.13。
 
-
 # 问题
 
 什么是k8s
 
-
 有什么用
-
 
 最常见的场景
 
-
 一个demo
-
 
 公司一般怎么用
 
-
-
 和我的业务的关联
-
-
 
 内部的原理是什么
